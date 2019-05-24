@@ -41,3 +41,4 @@ out/
 
 # aurelia
 client/node_modules
+client/dist
