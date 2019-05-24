@@ -38,3 +38,6 @@ out/
 .idea/modules.xml
 .idea/*.iml
 .idea/modules
+
+# aurelia
+client/node_modules
