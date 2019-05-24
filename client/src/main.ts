@@ -2,6 +2,9 @@ import 'core-js/stable';
 import {Aurelia} from 'aurelia-framework'
 import environment from './environment';
 import {PLATFORM} from 'aurelia-pal';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 export function configure(aurelia: Aurelia) {
   aurelia.use
