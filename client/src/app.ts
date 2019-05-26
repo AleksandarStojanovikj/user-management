@@ -44,8 +44,14 @@ export class App {
       {
         route: 'forgot-password',
         name: 'forgot-password',
-        title: 'forgot-password',
+        title: 'Forgot Password',
         moduleId: PLATFORM.moduleName('public/forgot-password')
+      },
+      {
+        route: 'verify',
+        name: 'verify-account',
+        title: 'Verify Account',
+        moduleId: PLATFORM.moduleName('public/verify-account')
       },
       {
         route: 'app',
