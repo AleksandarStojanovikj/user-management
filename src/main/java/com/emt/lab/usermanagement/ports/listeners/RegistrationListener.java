@@ -25,7 +25,7 @@ public class RegistrationListener {
 
         String mailTo = user.email;
         String subject = "Verify Email";
-        String confirmationUrl = "http://localhost:8080/accounts/verifyEmail?verificationcode=" + user.verificationCode;
+        String confirmationUrl = "http://localhost:8080/verify?verificationCode=" + user.verificationCode;
         emailSenderRepository.createAndSendEmail("no-reply@emt.com", mailTo, subject, confirmationUrl);
     }
 }

@@ -3,6 +3,8 @@ package com.emt.lab.usermanagement.service.impl;
 import com.emt.lab.usermanagement.model.User;
 import com.emt.lab.usermanagement.model.dto.UserDto;
 import com.emt.lab.usermanagement.model.exceptions.EmailAlreadyExistsException;
+import com.emt.lab.usermanagement.model.exceptions.InvalidVerificationCode;
+import com.emt.lab.usermanagement.model.exceptions.VerificationCodeExpired;
 import com.emt.lab.usermanagement.repository.UserRepository;
 import com.emt.lab.usermanagement.repository.email.EmailSenderRepository;
 import com.emt.lab.usermanagement.service.UserManagementService;
@@ -12,11 +14,9 @@ import org.springframework.stereotype.Service;
 public class UserManagementServiceImpl implements UserManagementService {
 
     private final UserRepository userRepository;
-    private final EmailSenderRepository emailSenderRepository;
 
-    public UserManagementServiceImpl(UserRepository userRepository, EmailSenderRepository emailSenderRepository) {
+    public UserManagementServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.emailSenderRepository = emailSenderRepository;
     }
 
     @Override
@@ -30,8 +30,14 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
-    public void verifyUser(User user) {
+    public void verifyUser(String verificationCode) throws InvalidVerificationCode, VerificationCodeExpired {
+        User user = userRepository.findByVerificationCode(verificationCode);
 
+        if (user == null)
+            throw new InvalidVerificationCode();
+
+        user.verify(verificationCode);
+        userRepository.save(user);
     }
 
     @Override

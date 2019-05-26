@@ -5,6 +5,8 @@ import com.emt.lab.usermanagement.model.User;
 import com.emt.lab.usermanagement.model.dto.LoginInfo;
 import com.emt.lab.usermanagement.model.dto.UserDto;
 import com.emt.lab.usermanagement.model.exceptions.EmailAlreadyExistsException;
+import com.emt.lab.usermanagement.model.exceptions.InvalidVerificationCode;
+import com.emt.lab.usermanagement.model.exceptions.VerificationCodeExpired;
 import com.emt.lab.usermanagement.repository.UserRepository;
 import com.emt.lab.usermanagement.service.AuthenticationService;
 import com.emt.lab.usermanagement.service.UserManagementService;
@@ -36,8 +38,8 @@ public class UsersController {
     @GetMapping("/test")
     public ResponseEntity testMe() {
         List<User> users = userRepository.findAll();
-        if(users == null)
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("no") ;
+        if (users == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("no");
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
@@ -61,4 +63,13 @@ public class UsersController {
         response.setHeader("location", "/app/accounts/" + newUser.id);
     }
 
+    @GetMapping("/verify")
+    public ResponseEntity verifyUser(@RequestParam String verificationCode) {
+        try {
+            userManagementService.verifyUser(verificationCode);
+            return ResponseEntity.status(HttpStatus.OK).body("User verified");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

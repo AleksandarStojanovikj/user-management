@@ -60,8 +60,7 @@ public class User {
     }
 
     public boolean isExpired() {
-//        return LocalDateTime.now().isAfter(createdOn.plusHours(24L));
-        return LocalDateTime.now().isAfter(createdOn);
+        return LocalDateTime.now().isAfter(createdOn.plusHours(24L));
     }
 
     public boolean canLogin(String password) {
