@@ -24,7 +24,7 @@ public class DefaultEmailConfig {
         mailSender.setUsername(username);
 
         Properties properties = mailSender.getJavaMailProperties();
-        properties.put("mail.debug", "true");
+        properties.put("email.debug", "true");
 
         return mailSender;
     }
