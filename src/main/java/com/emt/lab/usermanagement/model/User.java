@@ -36,10 +36,16 @@ public class User {
 
     public boolean isVerified;
 
+    @ManyToMany
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    public Set<UserRole> role = new HashSet<>();
+
     public User() {
     }
 
-    public static User register(UserDto userDto) {
+    public static User register(UserDto userDto, UserRole role) {
         User user = new User();
         user.email = userDto.email;
         user.fullname = userDto.fullname;
