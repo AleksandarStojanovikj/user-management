@@ -4,13 +4,13 @@ import com.emt.lab.usermanagement.model.dto.UserDetailsDto;
 import com.emt.lab.usermanagement.model.dto.UserDto;
 import com.emt.lab.usermanagement.model.exceptions.InvalidVerificationCode;
 import com.emt.lab.usermanagement.model.exceptions.VerificationCodeExpired;
-import org.apache.tomcat.jni.Local;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
-
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 public class User {
@@ -47,9 +47,9 @@ public class User {
         user.createdOn = LocalDateTime.now();
         user.address = userDto.address;
         user.city = userDto.city;
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        user.password = passwordEncoder.encode(userDto.password);
+        user.password = encodePassword(userDto.password);
         user.password = userDto.password;
+        user.role.add(role);
         return user;
     }
 
@@ -69,12 +69,17 @@ public class User {
 
     public String resetPassword() {
         String newPassword = UUID.randomUUID().toString();
-//        this.password - > encode
+        this.password = encodePassword(newPassword);
         return newPassword;
     }
 
+    public static String encodePassword(String plainPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(plainPassword);
+    }
+
     public boolean canLogin(String password) {
-        return isVerified && password.equals(this.password);
+        return isVerified && encodePassword(password).equals(this.password);
     }
 
     public User changeEmail(String email) {
