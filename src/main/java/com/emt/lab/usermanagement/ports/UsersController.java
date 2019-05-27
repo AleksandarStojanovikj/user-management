@@ -72,4 +72,14 @@ public class UsersController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity forgotPassword(@RequestBody String email) {
+        try {
+            userManagementService.forgotPassword(email);
+            return ResponseEntity.status(HttpStatus.OK).body("Successfully reset password");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

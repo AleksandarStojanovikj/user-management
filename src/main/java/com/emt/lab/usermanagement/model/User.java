@@ -63,6 +63,12 @@ public class User {
         return LocalDateTime.now().isAfter(createdOn.plusHours(24L));
     }
 
+    public String resetPassword() {
+        String newPassword = UUID.randomUUID().toString();
+//        this.password - > encode
+        return newPassword;
+    }
+
     public boolean canLogin(String password) {
         return isVerified && password.equals(this.password);
     }
