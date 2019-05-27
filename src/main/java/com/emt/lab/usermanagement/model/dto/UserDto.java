@@ -27,4 +27,13 @@ public class UserDto {
     @NotNull
     @NotEmpty
     public String city;
+
+    public UserDto(@NotNull @NotEmpty String email, @NotNull @NotEmpty String fullname, @NotNull @NotEmpty String password, @NotNull @NotEmpty String confirmPassword, @NotNull @NotEmpty String address, @NotNull @NotEmpty String city) {
+        this.email = email;
+        this.fullname = fullname;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.address = address;
+        this.city = city;
+    }
 }
