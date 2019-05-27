@@ -1,5 +1,6 @@
 package com.emt.lab.usermanagement.model;
 
+import com.emt.lab.usermanagement.model.dto.UserDetailsDto;
 import com.emt.lab.usermanagement.model.dto.UserDto;
 import com.emt.lab.usermanagement.model.exceptions.InvalidVerificationCode;
 import com.emt.lab.usermanagement.model.exceptions.VerificationCodeExpired;
@@ -27,6 +28,8 @@ public class User {
 
     public String fullname;
 
+    public String city;
+
     public String address;
 
     public String verificationCode;
@@ -43,6 +46,7 @@ public class User {
         user.verificationCode = UUID.randomUUID().toString();
         user.createdOn = LocalDateTime.now();
         user.address = userDto.address;
+        user.city = userDto.city;
 //        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 //        user.password = passwordEncoder.encode(userDto.password);
         user.password = userDto.password;
@@ -81,4 +85,10 @@ public class User {
         return this;
     }
 
+    public void editDetails(UserDetailsDto userDetailsDto) {
+        this.city = userDetailsDto.city;
+        this.address = userDetailsDto.address;
+        this.fullname = userDetailsDto.fullName;
+        this.email = userDetailsDto.email;
+    }
 }

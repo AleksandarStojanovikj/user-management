@@ -1,11 +1,9 @@
 package com.emt.lab.usermanagement.service.impl;
 
 import com.emt.lab.usermanagement.model.User;
+import com.emt.lab.usermanagement.model.dto.UserDetailsDto;
 import com.emt.lab.usermanagement.model.dto.UserDto;
-import com.emt.lab.usermanagement.model.exceptions.EmailAlreadyExistsException;
-import com.emt.lab.usermanagement.model.exceptions.InvalidEmailException;
-import com.emt.lab.usermanagement.model.exceptions.InvalidVerificationCode;
-import com.emt.lab.usermanagement.model.exceptions.VerificationCodeExpired;
+import com.emt.lab.usermanagement.model.exceptions.*;
 import com.emt.lab.usermanagement.repository.UserRepository;
 import com.emt.lab.usermanagement.repository.email.EmailSenderRepository;
 import com.emt.lab.usermanagement.service.UserManagementService;
@@ -64,5 +62,13 @@ public class UserManagementServiceImpl implements UserManagementService {
                 user.email,
                 "New system-generated password",
                 "Your new password is: " + newPassword + "\n Please reset your password.");
+    }
+
+    @Override
+    public void editDetails(UserDetailsDto userDetailsDto) throws UserDoesNotExistException {
+        User user = userRepository.findById(userDetailsDto.id).orElseThrow(UserDoesNotExistException::new);
+
+        user.editDetails(userDetailsDto);
+        userRepository.save(user);
     }
 }

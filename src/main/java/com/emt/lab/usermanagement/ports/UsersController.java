@@ -3,6 +3,7 @@ package com.emt.lab.usermanagement.ports;
 import com.emt.lab.usermanagement.events.OnRegistrationEvent;
 import com.emt.lab.usermanagement.model.User;
 import com.emt.lab.usermanagement.model.dto.LoginInfo;
+import com.emt.lab.usermanagement.model.dto.UserDetailsDto;
 import com.emt.lab.usermanagement.model.dto.UserDto;
 import com.emt.lab.usermanagement.model.exceptions.EmailAlreadyExistsException;
 import com.emt.lab.usermanagement.model.exceptions.InvalidVerificationCode;
@@ -78,6 +79,16 @@ public class UsersController {
         try {
             userManagementService.forgotPassword(email);
             return ResponseEntity.status(HttpStatus.OK).body("Successfully reset password");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/edit-details")
+    public ResponseEntity editDetails(@RequestBody UserDetailsDto userDetailsDto) {
+        try {
+            userManagementService.editDetails(userDetailsDto);
+            return ResponseEntity.status(HttpStatus.OK).body("Successfully edited details");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
