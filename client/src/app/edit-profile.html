@@ -1,16 +1,16 @@
 <template>
   <div class="container w-25">
-    <form class="text-center border border-light p-5">
+    <form class="text-center border border-light p-5" submit.delegate="editDetails()">
 
       <p class="h4 mb-4">Edit Profile</p>
 
-      <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Fullname">
+      <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Fullname" value.bind="user.fullName">
 
-      <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Address">
+      <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="City" value.bind="user.city">
 
-      <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Phonenumber">
+      <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Address" value.bind="user.address">
 
-      <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
+      <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail" value.bind="user.email">
 
       <div class="d-flex justify-content-around"></div>
 

@@ -10,7 +10,7 @@ export class App {
   constructor(private router: Router, private httpClient: HttpClient) {
     httpClient.configure(config => {
       config.useStandardConfiguration();
-      config.withBaseUrl("https://localhost:8080/api");
+      config.withBaseUrl("https://localhost:8080/");
     })
   }
 
@@ -26,7 +26,7 @@ export class App {
 
     config.options.pushState = true;
     config.mapUnknownRoutes(handleUnknownRoutes);
-    config.addAuthorizeStep(AuthorizeStep);
+    // config.addAuthorizeStep(AuthorizeStep);
 
     config.map([
       {
@@ -65,28 +65,28 @@ export class App {
   }
 }
 
-@autoinject
-class AuthorizeStep {
+// @autoinject
+// class AuthorizeStep {
 
-  constructor(private api: ApiService) { }
+//   constructor(private api: ApiService) { }
 
-  run(navigationInstruction: NavigationInstruction, next: Next): Promise<any> {
-    if (navigationInstruction.config.name == "admin") {
-      // var isAdmin = this.api.isAdmin;
-      var isAdmin = true;
-      if (!isAdmin) {
-        return next.cancel(new Redirect('admin-sign-in'));
-      }
-    }
+//   run(navigationInstruction: NavigationInstruction, next: Next): Promise<any> {
+//     if (navigationInstruction.config.name == "admin") {
+//       // var isAdmin = this.api.isAdmin;
+//       var isAdmin = true;
+//       if (!isAdmin) {
+//         return next.cancel(new Redirect('admin-sign-in'));
+//       }
+//     }
 
-    if (navigationInstruction.getAllInstructions().some(i => i.config.settings.auth)) {
-      // var isAuthenticated = this.api.isAuthenticated;
-      var isAuthenticated = true;
-      if (!isAuthenticated) {
-        return next.cancel(new Redirect('login'));
-      }
-    }
+//     if (navigationInstruction.getAllInstructions().some(i => i.config.settings.auth)) {
+//       // var isAuthenticated = this.api.isAuthenticated;
+//       var isAuthenticated = true;
+//       if (!isAuthenticated) {
+//         return next.cancel(new Redirect('login'));
+//       }
+//     }
 
-    return next();
-  }
-}
+//     return next();
+//   }
+// }
