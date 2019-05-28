@@ -16,4 +16,6 @@ public interface UserManagementService {
     void forgotPassword(String email) throws InvalidEmailException;
 
     void editDetails(UserDetailsDto userDetailsDto) throws UserDoesNotExistException;
+
+    User getUserDetails(Long id) throws UserDoesNotExistException;
 }

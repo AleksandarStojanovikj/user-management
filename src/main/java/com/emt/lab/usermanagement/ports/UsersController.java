@@ -7,6 +7,7 @@ import com.emt.lab.usermanagement.model.dto.UserDetailsDto;
 import com.emt.lab.usermanagement.model.dto.UserDto;
 import com.emt.lab.usermanagement.model.exceptions.EmailAlreadyExistsException;
 import com.emt.lab.usermanagement.model.exceptions.InvalidVerificationCode;
+import com.emt.lab.usermanagement.model.exceptions.UserDoesNotExistException;
 import com.emt.lab.usermanagement.model.exceptions.VerificationCodeExpired;
 import com.emt.lab.usermanagement.repository.UserRepository;
 import com.emt.lab.usermanagement.service.AuthenticationService;
@@ -48,7 +49,7 @@ public class UsersController {
     public ResponseEntity loginUser(@RequestBody LoginInfo loginInfo) {
         try {
             Long userId = authenticationService.loginUser(loginInfo);
-            return ResponseEntity.status(HttpStatus.OK).body(userId);
+            return ResponseEntity.status(HttpStatus.OK).body("{\"id\":" + userId + "}");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -70,6 +71,16 @@ public class UsersController {
             userManagementService.verifyUser(verificationCode);
             return ResponseEntity.status(HttpStatus.OK).body("User verified");
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity userDetails(@PathVariable Long id){
+        try{
+            User user = userManagementService.getUserDetails(id);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        } catch (UserDoesNotExistException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }

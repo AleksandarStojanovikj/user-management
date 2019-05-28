@@ -81,4 +81,11 @@ public class UserManagementServiceImpl implements UserManagementService {
         user.editDetails(userDetailsDto);
         userRepository.save(user);
     }
+
+    @Override
+    public User getUserDetails(Long id) throws UserDoesNotExistException {
+        User user = userRepository.findById(id)
+                .orElseThrow(UserDoesNotExistException::new);
+        return user;
+    }
 }

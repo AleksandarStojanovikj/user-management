@@ -54,7 +54,6 @@ public class User {
         user.address = userDto.address;
         user.city = userDto.city;
         user.password = encodePassword(userDto.password);
-        user.password = userDto.password;
         user.role.add(role);
         return user;
     }
@@ -81,11 +80,18 @@ public class User {
 
     public static String encodePassword(String plainPassword) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.encode(plainPassword);
+        String encodedPassword = passwordEncoder.encode(plainPassword);
+
+        return encodedPassword;
+    }
+
+    private boolean matchesPassword(String plainPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(plainPassword, this.password);
     }
 
     public boolean canLogin(String password) {
-        return isVerified && encodePassword(password).equals(this.password);
+        return isVerified && matchesPassword(password);
     }
 
     public User changeEmail(String email) {
