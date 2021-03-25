@@ -12,8 +12,6 @@ export class Login {
   async signInUser() {
     this.api.persistStorage = this.rememberMeChecked;
 
-    // let response = await this.api.authenticate(this.user);
-
     let response = await this.api.login(this.user);
     if (response === undefined){
 
